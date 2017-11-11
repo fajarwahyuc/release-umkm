@@ -63,23 +63,17 @@ class Login extends CI_Controller
             $email = $this->input->post('email');
             $password = $this->input->post('password');
             
-            $result = $this->login_model->loginMe($email, $password);
-            
-            if(count($result) > 0)
+            $res = $this->login_model->loginMe($email, $password);
+            if($res != null)
             {
-                foreach ($result as $res)
-                {
-                    $sessionArray = array('userId'=>$res->userId,                    
+                $sessionArray = array('userId'=>$res->userId,                    
                                             'role'=>$res->roleId,
-                                            'roleText'=>$res->role,
-                                            'name'=>$res->name,
+                                            'roleText'=>$res->roleName,
+                                            'name'=>$res->user_name,
                                             'isLoggedIn' => TRUE
                                     );
-                                    
-                    $this->session->set_userdata($sessionArray);
-                    
-                    redirect('/dashboard');
-                }
+                $this->session->set_userdata($sessionArray);
+                redirect('/dashboard');
             }
             else
             {
