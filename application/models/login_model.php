@@ -22,7 +22,6 @@ class Login_model extends CI_Model
                 FROM sys_member member
                 INNER JOIN sys_roles role ON member.sys_role_id = role.id
                 WHERE member.user_name = '".$username."' AND member.record_status = 1 LIMIT 1";
-        
         $user = $this->db->query($query)->row();
         if($user != null){
             if(verifyHashedPassword($password, $user->password)){
